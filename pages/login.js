@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import { NextResponse } from "next/server";
-import { redirect } from "next/navigation";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import useStore from "@/lib/store";
 import { useQuery } from "@tanstack/react-query";
 
-//ADD CODE TO VALIDATE THE PHONE NUMBER
 const Login = () => {
   const [phone, setPhone] = useState("");
   const [cc, setCc] = useState("+91");
-
+  const token = useStore((state) => state.token);
   const router = useRouter();
+
+  if (token) {
+    router.push('/');
+  }
 
   const getAuthID = async (countryCode, mobNum) => {
     const res = await fetch(`/api/auth/`, {

@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
     if (req.method === "POST") {
       const res1 = await fetch(
-        `http://127.0.0.1:8013/v2/auth/${req.body.authId}/resend/`,
+        `http://127.0.0.1:8013/v2/auth/otp/${req.body.authId}/resend/`,
         {
           method: "POST",
           mode: "no-cors",

@@ -13,7 +13,6 @@ export default function App({ Component, pageProps }) {
     <QueryClientProvider client={queryClient}>
       <Navbar />
       <Map/>
-      {/* <Login/>  */}
       <Component {...pageProps} />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

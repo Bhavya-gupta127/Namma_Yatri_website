@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useStore from "@/lib/store";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 function NavLink({ to, children }) {
   return (
@@ -10,7 +12,7 @@ function NavLink({ to, children }) {
 }
 
 function MobileNav({ open, setOpen }) {
-  return (
+    return (
     <div
       className={`absolute top-0 left-0 h-screen w-screen bg-white transform ${
         open ? "-translate-x-0" : "-translate-x-full"
@@ -53,6 +55,30 @@ function MobileNav({ open, setOpen }) {
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [token, setTok] = useState("Login");
+  const tk = useStore(state => state.token);
+  const setToken = useStore(state => state.setToken);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (tk !== "") {
+      setTok("Log out");
+    } else {
+      setTok("Login");
+    }
+  }, [tk]);
+
+  const handlePress = (e) => {
+    e.preventDefault();
+
+    if (tk) {
+      setToken("");
+      router.push('/');
+    } else {
+      router.push('/login');
+    }
+  }
+
   return (
     <nav className="flex filter drop-shadow-md bg-white px-4 py-4 h-15 items-center">
       <MobileNav open={open} setOpen={setOpen} />
@@ -93,7 +119,10 @@ export default function Navbar() {
         </div>
 
         <div className="text-3xl hidden md:flex">
-          <NavLink to="/login">LOGIN</NavLink>
+          <button onClick={handlePress}>
+            {token}
+          </button>
+          {/* <NavLink to="/login">LOGIN</NavLink> */}
           {/* <NavLink to="/about">ABOUT</NavLink> */}
         </div>
       </div>

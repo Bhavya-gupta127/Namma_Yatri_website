@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { withRouter } from 'next/router';
+import { withRouter, useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
+import useStore from "@/lib/store";
 
 //ADD CODE TO VALIDATE THE OTP
 const Otp = (props) => {
@@ -8,9 +9,10 @@ const Otp = (props) => {
   const [phone, setPhone] = useState("");
   const [authId, setAuthID] = useState("");
   const [wh, setWH] = useState("OPT_OUT");
+  const setToken = useStore((state) => state.setToken);
+  const router = useRouter();
 
   useEffect(() => {
-    console.log(props.router.query);
     setPhone(props.router.query.num);
     setAuthID(props.router.query.authId);
   }, [props.router.query]);
@@ -24,7 +26,7 @@ const Otp = (props) => {
       body: JSON.stringify({
         authId,
         otp,
-        whatsappNotificationEnroll
+        whatsappNotificationEnroll,
       }),
     }).then((res) => res.json());
 
@@ -41,7 +43,9 @@ const Otp = (props) => {
         authId,
       }),
     }).then((res) => res.json());
-  }
+
+    return res;
+  };
 
   const { data, error, refetch } = useQuery(
     ["verifyOTP", authId, OTP, wh],
@@ -49,19 +53,76 @@ const Otp = (props) => {
     { enabled: false }
   );
 
-  const { data1, error1, refetch1 } = useQuery(
-    ["resendOTP", authId],
-    () => resendOTP(authId),
-    { enabled: false }
-  );
+  const {
+    data: data1,
+    error: error1,
+    refetch: refetch1,
+  } = useQuery(["resendOTP", authId], () => resendOTP(authId), {
+    enabled: false,
+  });
 
-  if (data) {
-    console.log(data);
-  }
+  useEffect(() => {
+    if (error) alert(error);
+  }, [error]);
 
-  if (data1) {
-    alert("OTP Resent");
-  }
+  useEffect(() => {
+    if (error1) alert(error1);
+  }, [error1]);
+
+  useEffect(() => {
+    if (data?.errorPayload || data?.error) {
+      if (data.error) {
+        alert(data.error);
+      } else {
+        let er = "";
+        data.errorPayload.forEach((d) => {
+          er =
+            er +
+            " " +
+            d.fieldName +
+            " " +
+            d.expectation +
+            ". " +
+            (d.errorMessage ? d.errorMessage : "") +
+            "\n";
+        });
+        alert(er);
+      }
+    } else if (data?.errorCode) {
+      alert(
+        data.errorCode + " " + (data?.errorMessage ? data?.errorMessage : "")
+      );
+    } else if (data?.token) {
+      setToken(data.token);
+      router.push("/name");
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (data1?.errorPayload || data1?.error) {
+      if (data1.error) {
+        alert(data1.error);
+      } else {
+        let er = "";
+        data1.errorPayload.forEach((d) => {
+          er =
+            er +
+            " " +
+            d.fieldName +
+            " " +
+            d.expectation +
+            ". " +
+            (d.errorMessage ? d.errorMessage : "") +
+            "\n";
+        });
+        alert(er);
+      }
+    } else if (data1?.errorCode) {
+      alert(
+        data1.errorCode + " " + (data1?.errorMessage ? data1?.errorMessage : "")
+      );
+    }
+  }, [data1]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -71,6 +132,11 @@ const Otp = (props) => {
     } else {
       refetch();
     }
+  };
+
+  const hanldeResend = (e) => {
+    e.preventDefault();
+    refetch1();
   };
 
   function handleChange(event) {
@@ -87,7 +153,8 @@ const Otp = (props) => {
         <form onSubmit={handleFormSubmit}>
           <div className="w-screen max-w-xs">
             <label htmlFor="number" className="text-sm">
-              Login using the OTP sent to <span style={{textDecoration: 'bold'}}>+91 {phone}</span>
+              Login using the OTP sent to{" "}
+              <span style={{ textDecoration: "bold" }}>+91 {phone}</span>
             </label>
             {/* <br /> */}
             <input
@@ -101,6 +168,7 @@ const Otp = (props) => {
               autoComplete="off"
             />
           </div>
+          {/* TODO: add a Resend Button and make its onClick as handleResend */}
           <a href="#">
             <span className="text-sm">Resend</span>
           </a>
