@@ -78,7 +78,7 @@ const Otp = (props) => {
   }
 
   return (
-    <div className=" text-4xl  h-screen flex bg-white sm:bg-gray-100">
+    <div className=" text-4xl  h-screen flex temp">
       <div className=" mh-full  m-auto flex-col items-center bg-white rounded-lg sm:border sm:border-primaryBorder shadow-default py-40 px-16">
         <h1 className="text-blackfont-medium text-primary mt-4 mb-12 text-center">
           Enter OTP
