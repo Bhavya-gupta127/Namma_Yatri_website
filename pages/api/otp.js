@@ -1,20 +1,19 @@
+import { URL } from "./url";
+
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const res1 = await fetch(
-      `http://127.0.0.1:8013/v2/auth/${req.body.authId}/verify/`,
-      {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          deviceToken: "",
-          otp: req.body.otp,
-          whatsappNotificationEnroll: req.body.whatsappNotificationEnroll,
-        }),
-      }
-    )
+    const res1 = await fetch(`${URL}/v2/auth/${req.body.authId}/verify/`, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        deviceToken: "",
+        otp: req.body.otp,
+        whatsappNotificationEnroll: req.body.whatsappNotificationEnroll,
+      }),
+    })
       .then((res) => res.json())
       .catch((er) =>
         res.status(404).json({ message: "Something went wrong", error: er })

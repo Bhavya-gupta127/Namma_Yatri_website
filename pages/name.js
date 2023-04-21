@@ -1,8 +1,11 @@
+import useStore from "@/lib/store";
 import { useState } from "react";
 
 //ADD CODE TO VALIDATE THE NAME
 const Login = () => {
   const [name, setName] = useState("");
+  // const name1 = useStore((state) => state.name);
+  const setName1 = useStore((state) => state.setName);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -10,6 +13,8 @@ const Login = () => {
     // let name = e.target.value;
     console.log();
     console.log(name);
+
+    setName1(name);
   };
 
   function handleChange(event) {

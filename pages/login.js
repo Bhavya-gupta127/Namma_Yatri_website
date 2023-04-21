@@ -11,7 +11,7 @@ const Login = () => {
   const router = useRouter();
 
   if (token) {
-    router.push('/');
+    router.push("/");
   }
 
   const getAuthID = async (countryCode, mobNum) => {
@@ -60,8 +60,8 @@ const Login = () => {
         pathname: "/otp",
         query: {
           authId: data.authId,
-          num: phone
-        }
+          num: phone,
+        },
       });
     }
   }, [data]);
@@ -75,7 +75,7 @@ const Login = () => {
   }
 
   return (
-    <div className=" text-4xl  h-screen flex  temp" >
+    <div className=" text-4xl  h-screen flex  temp">
       <div className=" mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-40 px-16">
         <h1 className="text-blackfont-medium text-primary mt-4 mb-12 text-center">
           Enter Mobile number
