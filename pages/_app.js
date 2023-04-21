@@ -1,8 +1,14 @@
-import '@/styles/globals.css'
+import { useState } from "react";
+import "@/styles/globals.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export default function App({ Component, pageProps }) {
-  return<>
-  this is nav bar
-   <Component {...pageProps} />
-  </>
+  const [queryClient] = useState(() => new QueryClient());
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Component {...pageProps} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+    </QueryClientProvider>
+  );
 }
