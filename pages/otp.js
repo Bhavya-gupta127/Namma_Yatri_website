@@ -1,22 +1,76 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
+import { useEffect, useState } from "react";
+import { withRouter } from 'next/router';
+import { useQuery } from "@tanstack/react-query";
 
 //ADD CODE TO VALIDATE THE OTP
-const Login = () => {
+const Otp = (props) => {
   const [OTP, setOTP] = useState("");
-  // const phone = 1234;
-  // const phone = this.location.query.id;
-  // const { id } = getQueryParams(window.location.search);
-  var router = useRouter();
-  var id = router.query["id"];
-  const phone = id;
+  const [phone, setPhone] = useState("");
+  const [authId, setAuthID] = useState("");
+  const [wh, setWH] = useState("OPT_OUT");
+
+  useEffect(() => {
+    console.log(props.router.query);
+    setPhone(props.router.query.num);
+    setAuthID(props.router.query.authId);
+  }, [props.router.query]);
+
+  const verifyOTP = async (authId, otp, whatsappNotificationEnroll) => {
+    const res = await fetch(`/api/otp/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        authId,
+        otp,
+        whatsappNotificationEnroll
+      }),
+    }).then((res) => res.json());
+
+    return res;
+  };
+
+  const resendOTP = async (authId) => {
+    const res = await fetch(`/api/resend/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        authId,
+      }),
+    }).then((res) => res.json());
+  }
+
+  const { data, error, refetch } = useQuery(
+    ["verifyOTP", authId, OTP, wh],
+    () => verifyOTP(authId, OTP, wh),
+    { enabled: false }
+  );
+
+  const { data1, error1, refetch1 } = useQuery(
+    ["resendOTP", authId],
+    () => resendOTP(authId),
+    { enabled: false }
+  );
+
+  if (data) {
+    console.log(data);
+  }
+
+  if (data1) {
+    alert("OTP Resent");
+  }
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    // let OTP = e.target.value;
-    console.log();
-    console.log(OTP);
+    if (OTP.length != 4) {
+      alert("Invalid OTP");
+    } else {
+      refetch();
+    }
   };
 
   function handleChange(event) {
@@ -33,7 +87,7 @@ const Login = () => {
         <form onSubmit={handleFormSubmit}>
           <div className="w-screen max-w-xs">
             <label htmlFor="number" className="text-sm">
-              Login using the OTP sent to +91-{phone}
+              Login using the OTP sent to <span style={{textDecoration: 'bold'}}>+91 {phone}</span>
             </label>
             {/* <br /> */}
             <input
@@ -53,13 +107,11 @@ const Login = () => {
           <br />
           <br />
           <div className="flex justify-center items-center mt-6">
-            <Link href={{ pathname: "/name" }}>
-              <button
-                className={`w-full bg-black text-white font-medium bg-green py-2 px-4 text-xl rounded border border-green focus:outline-none focus:border-green-dark`}
-              >
-                Continue
-              </button>
-            </Link>
+            <button
+              className={`w-full bg-black text-white font-medium bg-green py-2 px-4 text-xl rounded border border-green focus:outline-none focus:border-green-dark`}
+            >
+              Continue
+            </button>
           </div>
         </form>
       </div>
@@ -67,4 +119,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withRouter(Otp);

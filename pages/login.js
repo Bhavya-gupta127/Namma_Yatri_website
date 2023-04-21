@@ -1,18 +1,73 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NextResponse } from "next/server";
 import { redirect } from "next/navigation";
+import { useRouter } from "next/router";
 import Link from "next/link";
+import useStore from "@/lib/store";
+import { useQuery } from "@tanstack/react-query";
 
 //ADD CODE TO VALIDATE THE PHONE NUMBER
 const Login = () => {
   const [phone, setPhone] = useState("");
+  const [cc, setCc] = useState("+91");
 
-  // const handleFormSubmit = (e) => {
-  //   // e.preventDefault();
+  const router = useRouter();
 
-  //   // let phone = e.target.value;
-  //   console.log(phone);
-  // };
+  const getAuthID = async (countryCode, mobNum) => {
+    const res = await fetch(`/api/auth/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        mobileCountryCode: countryCode,
+        mobileNumber: mobNum,
+        merchantId: "NAMMA_YATRI",
+      }),
+    }).then((res) => res.json());
+
+    return res;
+  };
+
+  const { data, error, refetch } = useQuery(
+    ["getAuthID", cc, phone],
+    () => getAuthID(cc, phone),
+    { enabled: false }
+  );
+
+  useEffect(() => {
+    if (data?.errorPayload || data?.error) {
+      if (data.error) {
+        alert(data.error);
+      } else {
+        let er = "";
+        data.errorPayload.forEach((d) => {
+          er =
+            er +
+            " " +
+            d.fieldName +
+            " " +
+            d.expectation +
+            ". " +
+            (d.errorMessage ? d.errorMessage : "") +
+            "\n";
+        });
+        alert(er);
+      }
+    } else if (data?.authId) {
+      router.push({
+        pathname: "/otp",
+        query: {
+          authId: data.authId,
+          num: phone
+        }
+      });
+    }
+  }, [data]);
+
+  if (error) {
+    alert("Something went wrong");
+  }
 
   function handleChange(event) {
     setPhone(event.target.value);
@@ -52,6 +107,10 @@ const Login = () => {
             <Link href={{ pathname: "/otp", query: { id: phone } }}>
               <button
                 className={`w-full bg-black text-white font-medium bg-green py-2 px-4 text-xl rounded border border-green focus:outline-none focus:border-green-dark`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  refetch();
+                }}
               >
                 Continue
               </button>
