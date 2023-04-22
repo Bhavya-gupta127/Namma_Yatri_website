@@ -4,12 +4,10 @@ import "mapbox-gl/dist/mapbox-gl.css"
 import mapboxgl from "mapbox-gl";
 // const MapboxDirections = require('mapbox-gl/dist/mapbox-gl.js')
 // import Mapa from '@/components/modules/Home/Map/Map'
-
-// import MapboxDirections from '@mapbox/mapbox-gl-directions';
-
+// import {MapboxDirections} from '@mapbox/mapbox-gl-directions';
+// import MapboxDirections from 'mapbox-gl/dist';
 // import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 // import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
-
 import useStore from "@/lib/store";
 mapboxgl.accessToken = 'pk.eyJ1IjoiYmhhdnlhZ3VwdGExMjciLCJhIjoiY2xncGY3Mml3MHJ5MzNkcDkya2JoZWxxaCJ9.8UoSDJE-QV7fWvj3pMcwcw';
 
