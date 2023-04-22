@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
+import { withRouter } from "next/router";
+import { useRouter } from "next/router";
 // const MapboxDirections = require('mapbox-gl/dist/mapbox-gl.js')
 // import Mapa from '@/components/modules/Home/Map/Map'
 
 // import MapboxDirections from '@mapbox/mapbox-gl-directions';
 
 // import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
-import Directions from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
-import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
+import Directions from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
+import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
 
 import useStore from "@/lib/store";
 mapboxgl.accessToken =
@@ -31,12 +33,17 @@ const Map = () => {
       zoom: zoom,
     });
 
-    map.addControl(
-      new Directions({
-        accessToken: mapboxgl.accessToken,
-      }),
-      "top-left"
-    );
+    if (router.pathname === "/home") {
+      map.addControl(
+        new Directions({
+          accessToken: mapboxgl.accessToken,
+          controls: {
+            profileSwitcher: false,
+          },
+        }),
+        "top-left"
+      );
+    }
 
     map.addControl(
       new mapboxgl.GeolocateControl({
@@ -79,6 +86,9 @@ const Map = () => {
   const addToMap = (map, coordinates) => {
     const marker1 = new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
   };
+
+  const router = useRouter();
+  console.log(router.pathname);
 
   return <div id="map"> map</div>;
 };
