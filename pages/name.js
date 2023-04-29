@@ -1,6 +1,7 @@
 import useStore from "@/lib/store";
 import { data } from "autoprefixer";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 //ADD CODE TO VALIDATE THE NAME
 const Login = () => {
@@ -24,39 +25,39 @@ const Login = () => {
   }
 
   // add this function to booking page
-  const getPickCoordinates=()=>{
-      const pickLocation="ambala" // make it dynamic
-      fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${pickLocation}.json?`+
-      new URLSearchParams({
-        access_token: "pk.eyJ1IjoiYmhhdnlhZ3VwdGExMjciLCJhIjoiY2xncGY3Mml3MHJ5MzNkcDkya2JoZWxxaCJ9.8UoSDJE-QV7fWvj3pMcwcw",
-        limit:1
-      })
-      )
-      .then(response=> response.json())
-      .then(data=>{
-          console.log(data.features[0].center);
-          setPickLocation(data.features[0].center);
-      })
-  }
-  const getDropCoordinates=()=>{
-      const dropLocation="delhi" // make it dynamic
-      fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${dropLocation}.json?`+
-      new URLSearchParams({
-        access_token: "pk.eyJ1IjoiYmhhdnlhZ3VwdGExMjciLCJhIjoiY2xncGY3Mml3MHJ5MzNkcDkya2JoZWxxaCJ9.8UoSDJE-QV7fWvj3pMcwcw",
-        limit:1
-      })
-      )
-      .then(response=> response.json())
-      .then(data=>{
-          console.log(data.features[0].center);
-          setDropLocation(data.features[0].center);
-      })
-  }
+  // const getPickCoordinates=()=>{
+  //     const pickLocation="ambala" // make it dynamic
+  //     fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${pickLocation}.json?`+
+  //     new URLSearchParams({
+  //       access_token: "pk.eyJ1IjoiYmhhdnlhZ3VwdGExMjciLCJhIjoiY2xncGY3Mml3MHJ5MzNkcDkya2JoZWxxaCJ9.8UoSDJE-QV7fWvj3pMcwcw",
+  //       limit:1
+  //     })
+  //     )
+  //     .then(response=> response.json())
+  //     .then(data=>{
+  //         console.log(data.features[0].center);
+  //         setPickLocation(data.features[0].center);
+  //     })
+  // }
+  // const getDropCoordinates=()=>{
+  //     const dropLocation="delhi" // make it dynamic
+  //     fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${dropLocation}.json?`+
+  //     new URLSearchParams({
+  //       access_token: "pk.eyJ1IjoiYmhhdnlhZ3VwdGExMjciLCJhIjoiY2xncGY3Mml3MHJ5MzNkcDkya2JoZWxxaCJ9.8UoSDJE-QV7fWvj3pMcwcw",
+  //       limit:1
+  //     })
+  //     )
+  //     .then(response=> response.json())
+  //     .then(data=>{
+  //         console.log(data.features[0].center);
+  //         setDropLocation(data.features[0].center);
+  //     })
+  // }
   useEffect(() => {
-    getPickCoordinates();
-    getDropCoordinates();
-  }, [])
-  
+    // getPickCoordinates();
+    // getDropCoordinates();
+  }, []);
+
   return (
     <div className=" text-4xl  h-screen flex temp">
       <div className=" mh-full  m-auto flex-col items-center bg-white rounded-lg sm:border sm:border-primaryBorder shadow-default py-40 px-16">
@@ -81,11 +82,13 @@ const Login = () => {
           </div>
           <br />
           <div className="flex justify-center items-center mt-6">
-            <button
-              className={`w-full bg-black text-white font-medium bg-green py-2 px-4 text-xl rounded border border-green focus:outline-none focus:border-green-dark`}
-            >
-              Continue
-            </button>
+            <Link href={{ pathname: "/home", query: { id: name } }}>
+              <button
+                className={`w-full bg-black text-white font-medium bg-green py-2 px-4 text-xl rounded border border-green focus:outline-none focus:border-green-dark`}
+              >
+                Continue
+              </button>
+            </Link>
           </div>
         </form>
       </div>

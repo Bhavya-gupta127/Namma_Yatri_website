@@ -33,20 +33,20 @@ const Map = () => {
       zoom: zoom,
     });
 
-    if (router.pathname === "/home") {
-      map.addControl(
-        new Directions({
-          accessToken: mapboxgl.accessToken,
-          unit: "metric",
-          interactive: false,
-          controls: {
-            profileSwitcher: false,
-            instructions: false,
-          },
-        }),
-        "top-left"
-      );
-    }
+    // if (router.pathname === "/home") {
+    //   map.addControl(
+    //     new Directions({
+    //       accessToken: mapboxgl.accessToken,
+    //       unit: "metric",
+    //       interactive: false,
+    //       controls: {
+    //         profileSwitcher: false,
+    //         instructions: false,
+    //       },
+    //     }),
+    //     "top-left"
+    //   );
+    // }
 
     map.addControl(
       new mapboxgl.GeolocateControl({

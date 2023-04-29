@@ -12,6 +12,7 @@ const Otp = (props) => {
   const setToken = useStore((state) => state.setToken);
   const router = useRouter();
 
+  // TODO: After token expire, if you enter the same name then there is some issues!!
   useEffect(() => {
     setPhone(props.router.query.num);
     setAuthID(props.router.query.authId);
@@ -95,6 +96,7 @@ const Otp = (props) => {
     } else if (data?.token) {
       setToken(data.token);
       router.push("/name");
+      // TODO: recheck where to set url
     }
   }, [data]);
 

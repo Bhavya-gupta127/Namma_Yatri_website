@@ -12,7 +12,7 @@ function NavLink({ to, children }) {
 }
 
 function MobileNav({ open, setOpen }) {
-    return (
+  return (
     <div
       className={`absolute top-0 left-0 h-screen w-screen bg-white transform ${
         open ? "-translate-x-0" : "-translate-x-full"
@@ -56,8 +56,9 @@ function MobileNav({ open, setOpen }) {
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [token, setTok] = useState("Login");
-  const tk = useStore(state => state.token);
-  const setToken = useStore(state => state.setToken);
+  const tk = useStore((state) => state.token);
+  const setToken = useStore((state) => state.setToken);
+  // const setCurrURL = useStore((state) => state.setCurrURL);
   const router = useRouter();
 
   useEffect(() => {
@@ -72,12 +73,13 @@ export default function Navbar() {
     e.preventDefault();
 
     if (tk) {
-      setToken("");
-      router.push('/');
+      setToken(""); // removing token on logout
+      // setCurrURL(""); // set current url to empty to restart login process
+      router.push("/"); // move to home
     } else {
-      router.push('/login');
+      router.push("/login");
     }
-  }
+  };
 
   return (
     <nav className="flex filter drop-shadow-md bg-white px-4 py-4 h-15 items-center">
@@ -119,9 +121,7 @@ export default function Navbar() {
         </div>
 
         <div className="text-3xl hidden md:flex">
-          <button onClick={handlePress}>
-            {token}
-          </button>
+          <button onClick={handlePress}>{token}</button>
           {/* <NavLink to="/login">LOGIN</NavLink> */}
           {/* <NavLink to="/about">ABOUT</NavLink> */}
         </div>
