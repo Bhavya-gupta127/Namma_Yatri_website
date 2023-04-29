@@ -25,6 +25,7 @@ const Map = () => {
   // const [dropLocation, setDropLocation] = useState([1, 1]);
   // const pick = useStore((state) => state.pickLocation);
   // const drop = useStore((state) => state.dropLocation);
+  var m;
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: "map",
@@ -33,32 +34,37 @@ const Map = () => {
       zoom: zoom,
     });
 
-    // if (router.pathname === "/home") {
-    //   map.addControl(
-    //     new Directions({
-    //       accessToken: mapboxgl.accessToken,
-    //       unit: "metric",
-    //       interactive: false,
-    //       controls: {
-    //         profileSwitcher: false,
-    //         instructions: false,
-    //       },
-    //     }),
-    //     "top-left"
-    //   );
-    // }
+      m=new Directions({
+      accessToken: mapboxgl.accessToken,
+      unit: "metric",
+      interactive: false,
+      controls: {
+        profileSwitcher: false,
+        instructions: false,
+      },
+    });
+    if (router.pathname === "/home") {
+      map.addControl(
+        m,
+        "top-left"
+      );
+    }
+    m.on('result',(e=>{
+      console.log(e);
+    }))
 
-    map.addControl(
-      new mapboxgl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true,
-        },
-        trackUserLocation: true,
-        showUserHeading: true,
-      })
-    );
+    
+    // map.addControl(
+    //   new mapboxgl.GeolocateControl({
+    //     positionOptions: {
+    //       enableHighAccuracy: true,
+    //     },
+    //     trackUserLocation: true,
+    //     showUserHeading: true,
+    //   })
+    // );
 
-    const nav = new mapboxgl.NavigationControl({
+    const nav = new mapboxgl.NavigationControl({   
       visualizePitch: true,
     });
     map.addControl(nav, "bottom-right");
@@ -82,7 +88,13 @@ const Map = () => {
     //   ]);
     // }
   });
-
+function consolelog(){
+  console.log(m.getDestination().geometry.coordinates);
+  console.log(m.getOrigin().geometry.coordinates);
+  console.log(m);
+  // m.setOrigin("ambala");
+  // m.setOrigin("delhi");
+}
   const router = useRouter();
   console.log(router.pathname);
   //manual markers
@@ -90,7 +102,12 @@ const Map = () => {
   //   const marker1 = new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
   // };
 
-  return <div id="map"> map</div>;
+  return <>
+  <div style={{position:'absolute',zIndex:"10000"}} onClick={consolelog}>
+    button
+  </div>
+  <div id="map"> map</div>;
+  </>
 };
 
 export default Map;
