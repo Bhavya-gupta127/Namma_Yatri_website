@@ -10,7 +10,7 @@ const Home = () => {
   const [to, setTo] = useState("");
 
   function handleChange(event) {
-    setPhone(event.target.value);
+    // setPhone(event.target.value);
   }
 
   return (
@@ -47,16 +47,13 @@ const Home = () => {
           </div>
           <br />
           <div className="flex justify-center items-center mt-6">
-            <button
-              className={`w-full bg-black text-white font-medium bg-green py-2 px-4 text-xl rounded border border-green focus:outline-none focus:border-green-dark`}
-              onClick={(e) => {
-                e.preventDefault();
-                refetch();
-              }}
-            >
-              Continue
-            </button>
-            {/* </Link> */}
+            <Link href={{ pathname: "/request" }}>
+              <button
+                className={`w-full bg-black text-white font-medium bg-green py-2 px-4 text-xl rounded border border-green focus:outline-none focus:border-green-dark`}
+              >
+                Continue
+              </button>
+            </Link>
           </div>
         </form>
       </div>

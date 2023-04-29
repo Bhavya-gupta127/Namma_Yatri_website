@@ -79,10 +79,6 @@ const Home = () => {
           <Link href={{ pathname: "/choose" }}>
             <button
               className={`w-full bg-black text-white font-medium bg-green py-2 px-4 text-xl rounded border border-green focus:outline-none focus:border-green-dark`}
-              onClick={(e) => {
-                e.preventDefault();
-                refetch();
-              }}
             >
               Request Ride
             </button>

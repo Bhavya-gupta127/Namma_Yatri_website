@@ -81,7 +81,7 @@ const Map = () => {
     //     pickLocation, // northeastern corner of the bounds
     //   ]);
     // }
-  });
+  }, [lng, lat, zoom]);
 
   const router = useRouter();
   console.log(router.pathname);
