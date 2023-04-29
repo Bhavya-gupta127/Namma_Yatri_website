@@ -87,7 +87,8 @@ const Map = () => {
     //     pickLocation, // northeastern corner of the bounds
     //   ]);
     // }
-  });
+ }, [lng, lat, zoom]);
+
 function consolelog(){
   console.log(m.getDestination().geometry.coordinates);
   console.log(m.getOrigin().geometry.coordinates);
