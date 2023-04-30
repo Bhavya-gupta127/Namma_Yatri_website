@@ -66,8 +66,8 @@ const Map = () => {
     <>
       {router.pathname === "/home" ? (
         <div style={{ position: "absolute", zIndex: "2" }}>
-          <div className=" text-4xl  h-screen flex  temp">
-            <div className=" mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-40 px-16">
+          <div className=" text-2xl  h-screen flex">
+            <div className=" mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-20">
               <h1 className="text-blackfont-medium text-primary mt-4 mb-12 text-center">
                 Choose Your Location
               </h1>
