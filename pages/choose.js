@@ -1,12 +1,19 @@
 import RideCard from "@/components/rideCard";
+import useStore from "@/lib/store";
 import { redirect } from "next/dist/server/api-utils";
 import Link from "next/link";
 import { Router } from "next/router";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+
 const Choose = () => {
   const [seconds, setSeconds] = useState(15);
+  const [id, setId] = useState("");
   const router = useRouter();
+  const rides = useStore((state) => state.rides);
+  const token = useStore((state) => state.token);
+
   useEffect(() => {
     let myInterval = setInterval(() => {
       if (seconds > 0) {
@@ -21,6 +28,39 @@ const Choose = () => {
       clearInterval(myInterval);
     };
   });
+
+  const confirmRide = async (id, token) => {
+    const res = await fetch(`/api/confirmRide/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token,
+        id,
+      }),
+    }).then((res) => res.json());
+
+    return res;
+  };
+
+  const { data, error, refetch } = useQuery(
+    ["confirmRide", id, token],
+    () => confirmRide(id, token),
+    { enabled: false }
+  );
+
+  useEffect(() => {
+    if (id !== '') {
+      refetch();
+    }
+  }, [id]);
+
+  if (data) {
+    console.log(data);
+    router.push('/');
+  }
+
   return (
     <div className=" text-4xl  h-screen flex  temp">
       <div className=" mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-14 px-16">
@@ -31,8 +71,19 @@ const Choose = () => {
           Confirming selected ride in: {seconds} s
         </div>
 
-        <RideCard dis="1" name="Ganesh" rating="5.0" price="822" timer="5" />
-        <RideCard dis="1" name="Ganesh" rating="5.0" price="822" timer="40" />
+        {rides.map(({ onDemandCab }, idx) => {
+          return (
+            <RideCard
+              id={onDemandCab.id}
+              dis={Math.floor(onDemandCab.quoteDetails.contents.distanceToNearestDriver / 0.96)}
+              name={onDemandCab.agencyName}
+              rating="5.0"
+              price={onDemandCab.estimatedFare}
+              timer={idx === 0 ? "5" : "40"}
+              setId={setId}
+            />
+          );
+        })}
 
         <div className="text-blackfont-medium text-sm  mb-5 text-center">
           💵Pay Driver using Cash/UPI

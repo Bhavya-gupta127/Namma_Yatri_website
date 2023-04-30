@@ -9,8 +9,14 @@ const Home = () => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
 
-  function handleChange(event) {
+  function handleChangeFrom(event) {
     // setPhone(event.target.value);
+    setFrom(event.target.value);
+  }
+
+  function handleChangeTo(event) {
+    // setPhone(event.target.value);
+    setTo(event.target.value);
   }
 
   return (

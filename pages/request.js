@@ -11,9 +11,71 @@ const Home = () => {
   const [time, setTime] = useState("57");
   const [distance, setDistance] = useState("36.05");
   const [preference, setPreference] = useState(true);
+  const [points, setPoints] = useState([]);
+  const router = useRouter();
+  const src = useStore((state) => state.src);
+  const dst = useStore((state) => state.dst);
+  const token = useStore((state) => state.token);
+  const setRides = useStore((state) => state.setRides);
 
-  function handleChange(event) {
-    setPhone(event.target.value);
+  // if (token == '') {
+  //   router.push('/login');
+  // }
+
+  const makeRequest = async (points, token) => {
+    const res = await fetch(`/api/rideSearch/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token,
+        points,
+      }),
+    }).then((res) => res.json());
+
+    return res;
+  };
+
+  const { data, error, refetch } = useQuery(
+    ["makeRequest", points, token],
+    () => makeRequest(points, token),
+    { enabled: false }
+  );
+
+  useEffect(() => {
+    if (points.length === 2) {
+      refetch();
+    } 
+  }, [points]);
+
+  console.log(src, dst);
+
+  function handleRequest(event) {
+    event.preventDefault();
+
+    if (src.length === 0 || dst.length === 0) {
+      alert("Select source and Destination first");
+    } else {
+      const points = [
+        {
+          lat: src[0],
+          lon: src[1],
+        },
+        {
+          lat: dst[0],
+          lon: dst[1],
+        },
+      ];
+
+      setPoints(points);
+    }
+  }
+
+  if (data) {
+    console.log(data);
+    setRides(data.data);
+    router.push('/choose');
   }
 
   return (
@@ -27,7 +89,7 @@ const Home = () => {
             {fareMin}-{fareMax}
           </h1>
           <div className="text-center	 text-base text-gray-600 mb-15 mt-3">
-            {distance}km.{time}min
+            {distance}km, {time}min
           </div>
           <hr />
           <h5 className="mt-5 text-lg text-bold text-center">
@@ -76,13 +138,14 @@ const Home = () => {
         </div>
 
         <div className="flex justify-center items-center mt-6">
-          <Link href={{ pathname: "/choose" }}>
-            <button
-              className={`w-full bg-black text-white font-medium bg-green py-2 px-4 text-xl rounded border border-green focus:outline-none focus:border-green-dark`}
-            >
-              Request Ride
-            </button>
-          </Link>
+          {/* <Link href={{ pathname: "/choose" }}> */}
+          <button
+            onClick={handleRequest}
+            className={`w-full bg-black text-white font-medium bg-green py-2 px-4 text-xl rounded border border-green focus:outline-none focus:border-green-dark`}
+          >
+            Request Ride
+          </button>
+          {/* </Link> */}
         </div>
       </div>
     </div>
