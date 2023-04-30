@@ -61,7 +61,7 @@ const Choose = () => {
       console.log(data);
       setRides([]);
       setRideDetails(data);
-      router.push("/ride");
+      router.replace("/ride");
     }
   }, [data]);
 

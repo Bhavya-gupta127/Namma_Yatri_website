@@ -4,8 +4,6 @@ import Directions from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
 import useStore from "@/lib/store";
 import { useRouter } from "next/router";
-import Link from "next/link";
-import { useQuery } from "@tanstack/react-query";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYmhhdnlhZ3VwdGExMjciLCJhIjoiY2xncGY3Mml3MHJ5MzNkcDkya2JoZWxxaCJ9.8UoSDJE-QV7fWvj3pMcwcw";
@@ -45,6 +43,7 @@ const Map = () => {
     const nav = new mapboxgl.NavigationControl({
       visualizePitch: true,
     });
+
     map.addControl(nav, "bottom-right");
   }, [lng, lat, zoom, path]);
 
@@ -66,7 +65,7 @@ const Map = () => {
     <>
       {router.pathname === "/home" ? (
         <div style={{ position: "absolute", zIndex: "2" }}>
-          <div className=" text-2xl  h-screen flex">
+          <div className=" text-2xl h-screen flex">
             <div className=" mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-20">
               <h1 className="text-blackfont-medium text-primary mt-4 mb-12 text-center">
                 Choose Your Location

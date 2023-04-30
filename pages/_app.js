@@ -12,13 +12,15 @@ export default function App({ Component, pageProps }) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Navbar />
-      <div className="flex items-center justify-center">
-        <Map />
-        <Component {...pageProps} />
-      </div>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <div style={{display: 'flex'}}>
+      <QueryClientProvider client={queryClient}>
+        <Navbar />
+        <div className="flex items-center justify-center" style={{ flex: 1 }}>
+          <Map />
+          <Component {...pageProps} />
+        </div>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </div>
   );
 }

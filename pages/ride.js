@@ -1,11 +1,23 @@
 import useStore from "@/lib/store";
+import { useRouter } from "next/router";
 
 const Ride = () => {
   const srcName = useStore((state) => state.srcName);
   const dstName = useStore((state) => state.dstName);
   const rideDetails = useStore((state) => state.rideDetails);
+  const setSrcName = useStore((state) => state.setSrcName);
+  const setDstName = useStore((state) => state.setDstName);
+  const setSrc = useStore((state) => state.setSrc);
+  const setDst = useStore((state) => state.setDst);
+  const router = useRouter();
 
-  console.log(rideDetails);
+  const handleRequest = () => {
+    setDstName("");
+    setSrcName("");
+    setSrc([]);
+    setDst([]);
+    router.replace('/cancel');
+  }
 
   return (
     <div className=" text-4xl  h-screen flex  temp">
@@ -67,7 +79,7 @@ const Ride = () => {
         <div className="flex justify-center items-center mt-6">
           {/* <Link href={{ pathname: "/choose" }}> */}
           <button
-            // onClick={handleRequest}
+            onClick={handleRequest}
             className={`w-full bg-black text-white font-medium bg-green py-2 px-4 text-xl rounded border border-green focus:outline-none focus:border-green-dark`}
           >
             Cancel Ride

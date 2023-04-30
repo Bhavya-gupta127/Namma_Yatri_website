@@ -77,7 +77,7 @@ const Home = () => {
 
   useEffect(() => {
     if (srcName !== "" && dstName !== "") {
-      router.push('/choose');
+      router.replace('/choose');
     }
     console.log(srcName, dstName);
   }, [srcName, dstName]);
