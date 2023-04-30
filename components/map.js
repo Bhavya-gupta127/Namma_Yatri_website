@@ -49,9 +49,9 @@ const Map = () => {
         "top-left"
       );
     }
-    m.on('result',(e=>{
-      console.log(e);
-    }))
+    // m.on('result',(e=>{
+    //   console.log(e);
+    // }))
 
     
     // map.addControl(
@@ -87,7 +87,8 @@ const Map = () => {
     //     pickLocation, // northeastern corner of the bounds
     //   ]);
     // }
-  });
+ }, [lng, lat, zoom]);
+
 function consolelog(){
   console.log(m.getDestination().geometry.coordinates);
   console.log(m.getOrigin().geometry.coordinates);
@@ -103,9 +104,11 @@ function consolelog(){
   // };
 
   return <>
+  {router.pathname === "/home"?
   <div style={{position:'absolute',zIndex:"10000"}} onClick={consolelog}>
-    button
-  </div>
+    Continue
+  </div>:<></>
+}
   <div id="map"> map</div>;
   </>
 };

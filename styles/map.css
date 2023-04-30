@@ -181,6 +181,7 @@
 }
 .mapbox-directions-component {
   position: relative;
+  top: 40vh;
 }
 .mapbox-directions-component,
 .mapbox-directions-component *,
