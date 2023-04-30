@@ -10,17 +10,77 @@ const Home = () => {
   const [fareMax, setFareMax] = useState("₹872");
   const [time, setTime] = useState("57");
   const [distance, setDistance] = useState("36.05");
-  const [preference, setPreference] = useState(true);
   const [points, setPoints] = useState([]);
   const router = useRouter();
   const src = useStore((state) => state.src);
   const dst = useStore((state) => state.dst);
   const token = useStore((state) => state.token);
   const setRides = useStore((state) => state.setRides);
+  const srcName = useStore((state) => state.srcName);
+  const dstName = useStore((state) => state.dstName);
+  const setSrcName = useStore((state) => state.setSrcName);
+  const setDstName = useStore((state) => state.setDstName);
 
-  // if (token == '') {
-  //   router.push('/login');
-  // }
+  const getOriginName = async (points) => {
+    const res = await fetch(`/api/reverseGeo/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        points,
+      }),
+    }).then((res) => res.json());
+
+    return res;
+  };
+
+  const {
+    data: dataSrc,
+    error: errSrc,
+    refetch: refetchSrc,
+  } = useQuery(["getOriginName", src], () => getOriginName(src), {
+    enabled: false,
+  });
+
+  const getDestName = async (points) => {
+    const res = await fetch(`/api/reverseGeo/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        points,
+      }),
+    }).then((res) => res.json());
+
+    return res;
+  };
+
+  const {
+    data: dataDst,
+    error: errDst,
+    refetch: refetchDst,
+  } = useQuery(["getDestName", dst], () => getDestName(dst), {
+    enabled: false,
+  });
+
+  useEffect(() => {
+    if (dataSrc) {
+      setSrcName(dataSrc.data);
+    }
+  
+    if (dataDst) {
+      setDstName(dataDst.data);
+    }
+  }, [dataSrc, dataDst]);
+
+  useEffect(() => {
+    if (srcName !== "" && dstName !== "") {
+      router.push('/choose');
+    }
+    console.log(srcName, dstName);
+  }, [srcName, dstName]);
 
   const makeRequest = async (points, token) => {
     const res = await fetch(`/api/rideSearch/`, {
@@ -49,8 +109,6 @@ const Home = () => {
     }
   }, [points]);
 
-  console.log(src, dst);
-
   function handleRequest(event) {
     event.preventDefault();
 
@@ -69,13 +127,15 @@ const Home = () => {
       ];
 
       setPoints(points);
+
+      refetchSrc();
+      refetchDst();
     }
   }
 
   if (data) {
-    console.log(data);
     setRides(data.data);
-    router.push("/choose");
+    // router.push("/choose");
   }
 
   return (

@@ -82,7 +82,7 @@ const Login = () => {
         </h1>
 
         <form>
-          <div className="w-full">
+          <div className="w-full md:max-w-xs">
             {/* <label htmlFor="number">Enter your Mobile Number</label> */}
             {/* <br /> */}
             <input

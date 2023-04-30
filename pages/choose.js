@@ -1,8 +1,5 @@
 import RideCard from "@/components/rideCard";
 import useStore from "@/lib/store";
-import { redirect } from "next/dist/server/api-utils";
-import Link from "next/link";
-import { Router } from "next/router";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -13,6 +10,8 @@ const Choose = () => {
   const router = useRouter();
   const rides = useStore((state) => state.rides);
   const token = useStore((state) => state.token);
+  const setRides = useStore((state) => state.setRides);
+  const setRideDetails = useStore((state) => state.setRideDetails);
 
   useEffect(() => {
     let myInterval = setInterval(() => {
@@ -21,7 +20,7 @@ const Choose = () => {
       }
       if (seconds === 0) {
         clearInterval(myInterval);
-        router.push("/"); //go to next page here
+        router.push("/ride"); //go to next page here
       }
     }, 1000);
     return () => {
@@ -54,12 +53,17 @@ const Choose = () => {
     if (id !== "") {
       refetch();
     }
+    console.log("Here")
   }, [id]);
 
-  if (data) {
-    console.log(data);
-    router.push("/");
-  }
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+      setRides([]);
+      setRideDetails(data);
+      router.push("/ride");
+    }
+  }, [data]);
 
   return (
     <div className=" text-4xl  h-screen flex  temp">

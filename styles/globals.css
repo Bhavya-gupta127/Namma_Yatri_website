@@ -20,7 +20,7 @@ html,
 body {
   margin: 0;
   height: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 body {
@@ -53,4 +53,16 @@ body {
   position: absolute;
   width: 100%;
   margin-top: -50vh;
+}
+
+.ride {
+  margin-top: 7.5vh;
+  padding: 20px;
+  font-size: 28px;
+}
+
+@media only screen and (min-width: 600px) {
+  .ride {
+    margin-top: 15vh;
+  }
 }
