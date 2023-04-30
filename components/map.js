@@ -55,9 +55,9 @@ const Map = () => {
       console.log(m.getDestination().geometry.coordinates);
       setDst(m.getDestination().geometry.coordinates);
       console.log(m.getOrigin().geometry.coordinates);
-      setSrc(m.getOrigin().geometry.coordinates);
+      setSrc(m.getOrigin());
       console.log(m);
-      router.push("/request");
+      // router.push("/request");
     }
   }
 
