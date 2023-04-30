@@ -58,7 +58,7 @@ const Choose = () => {
 
   if (data) {
     console.log(data);
-    router.push("/");
+    router.push("/ride");
   }
 
   return (
