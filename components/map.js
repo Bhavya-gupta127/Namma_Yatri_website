@@ -13,6 +13,7 @@ const Map = () => {
   const [lng, setLng] = useState(-70.9);
   const [lat, setLat] = useState(42.35);
   const [zoom, setZoom] = useState(3);
+  const [path, setPath] = useState("/");
   var m;
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -31,25 +32,19 @@ const Map = () => {
         instructions: false,
       },
     });
-    if (router.pathname === "/home") {
+    if (path=== "/home") {
       map.addControl(
         m,
         "top-left"
       );
     }
-    else
-    {
-      console.log(map.remove(m));
-      map.remove(
-        m
-      );
-    }
+ 
 
     const nav = new mapboxgl.NavigationControl({   
       visualizePitch: true,
     });
     map.addControl(nav, "bottom-right");
- }, [lng, lat, zoom]);
+ }, [lng, lat, zoom,path]);
 
 function consolelog(){
   console.log(m.getDestination().geometry.coordinates);
@@ -57,15 +52,15 @@ function consolelog(){
   console.log(m);
 }
   const router = useRouter();
-  console.log(router.pathname);
- const [from, setFrom] = useState("");
- const [to, setTo] = useState("");
+useEffect(() => {
+  if(router.pathname=="/home")
+      setPath(router.pathname);
+}, [router.pathname])
 
- function handleChange(event) {
-   // setPhone(event.target.value);
- }
+  console.log(router.pathname);
+
   return <>
-  {router.pathname === "/home"?
+  {path === "/home"?
   <div style={{position:'absolute',zIndex:"2"}}>
      <div className=" text-4xl  h-screen flex  temp">
       <div className=" mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-40 px-16">
