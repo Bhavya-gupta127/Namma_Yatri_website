@@ -14,8 +14,10 @@ export default function App({ Component, pageProps }) {
   return (
     <QueryClientProvider client={queryClient}>
       <Navbar />
-      <Map />
-      <Component {...pageProps} />
+      <div className="flex items-center justify-center">
+        <Map />
+        <Component {...pageProps} />
+      </div>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
