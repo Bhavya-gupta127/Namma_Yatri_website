@@ -76,13 +76,13 @@ const Login = () => {
 
   return (
     <div className=" text-4xl  h-screen flex  temp">
-      <div className=" mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-40 px-16">
+      <div className="max-w-s mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-40 px-16">
         <h1 className="text-blackfont-medium text-primary mt-4 mb-12 text-center">
           Enter Mobile number
         </h1>
 
         <form>
-          <div className="w-screen max-w-xs">
+          <div className="w-full">
             {/* <label htmlFor="number">Enter your Mobile Number</label> */}
             {/* <br /> */}
             <input

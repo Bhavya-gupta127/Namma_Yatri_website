@@ -51,19 +51,19 @@ const Choose = () => {
   );
 
   useEffect(() => {
-    if (id !== '') {
+    if (id !== "") {
       refetch();
     }
   }, [id]);
 
   if (data) {
     console.log(data);
-    router.push('/');
+    router.push("/");
   }
 
   return (
     <div className=" text-4xl  h-screen flex  temp">
-      <div className=" mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-14 px-16">
+      <div className="max-w-s mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-14 px-16">
         <h1 className="text-blackfont-medium text-primary  mb-5 text-center">
           Choose your Ride
         </h1>
@@ -75,7 +75,9 @@ const Choose = () => {
           return (
             <RideCard
               id={onDemandCab.id}
-              dis={Math.floor(onDemandCab.quoteDetails.contents.distanceToNearestDriver / 0.96)}
+              dis={Math.floor(
+                onDemandCab.quoteDetails.contents.distanceToNearestDriver / 0.96
+              )}
               name={onDemandCab.agencyName}
               rating="5.0"
               price={onDemandCab.estimatedFare}
