@@ -1,18 +1,20 @@
 import useStore from "@/lib/store";
 
 const Ride = () => {
-  const srcName = useStore(state => state.srcName);
-  const dstName = useStore(state => state.dstName);
-  const rideDetails = useStore(state => state.rideDetails);
+  const srcName = useStore((state) => state.srcName);
+  const dstName = useStore((state) => state.dstName);
+  const rideDetails = useStore((state) => state.rideDetails);
 
   console.log(rideDetails);
 
   return (
     <div className=" text-4xl  h-screen flex  temp">
-      <div className=" mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-40 px-16">
+      <div className="max-w-s mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-40 px-16 ride">
         <div className="flex flex-col">
           <div className="ontheway flex justify-between">
-            <div className="text-2l m-2 p-2">{rideDetails.name} is on the way..</div>
+            <div className="text-2l m-2 p-2">
+              {rideDetails.name} is on the way..
+            </div>
             <img className="w-16 m-2 p-2" src="call.png" alt="call" srcset="" />
           </div>
           <br />
@@ -54,13 +56,11 @@ const Ride = () => {
           <div className="location m-2 p-2">
             <div className="text-sm">pickup and drop</div>
 
-            <div className="pickup text-2xl">
-              {srcName}
+            <div className="pickup text-xl">
+              <div className="text-xs inline">🟢</div> {srcName}
             </div>
             <span className="text-sm bg-slate-100 p-2">36.5 km</span>
-            <div className="drop text-2xl mt-2">
-              {dstName}
-            </div>
+            <div className="drop text-xl mt-2">{dstName}</div>
           </div>
         </div>
 

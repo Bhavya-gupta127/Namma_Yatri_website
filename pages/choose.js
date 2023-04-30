@@ -20,7 +20,7 @@ const Choose = () => {
       }
       if (seconds === 0) {
         clearInterval(myInterval);
-        router.push("/"); //go to next page here
+        router.push("/ride"); //go to next page here
       }
     }, 1000);
     return () => {
