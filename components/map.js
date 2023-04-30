@@ -1,18 +1,11 @@
 import { useEffect, useState } from "react";
 
-// import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
-// const MapboxDirections = require('mapbox-gl/dist/mapbox-gl.js')
-// import Mapa from '@/components/modules/Home/Map/Map'
-
-// import MapboxDirections from '@mapbox/mapbox-gl-directions';
-
-// import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import Directions from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
-
 import useStore from "@/lib/store";
 import { useRouter } from "next/router";
+import Link from "next/link";
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYmhhdnlhZ3VwdGExMjciLCJhIjoiY2xncGY3Mml3MHJ5MzNkcDkya2JoZWxxaCJ9.8UoSDJE-QV7fWvj3pMcwcw";
 
@@ -20,11 +13,6 @@ const Map = () => {
   const [lng, setLng] = useState(-70.9);
   const [lat, setLat] = useState(42.35);
   const [zoom, setZoom] = useState(3);
-  //manual markers
-  // const [pickLocation, setPickLocation] = useState([1, 1]);
-  // const [dropLocation, setDropLocation] = useState([1, 1]);
-  // const pick = useStore((state) => state.pickLocation);
-  // const drop = useStore((state) => state.dropLocation);
   var m;
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -49,64 +37,60 @@ const Map = () => {
         "top-left"
       );
     }
-    // m.on('result',(e=>{
-    //   console.log(e);
-    // }))
-
-    
-    // map.addControl(
-    //   new mapboxgl.GeolocateControl({
-    //     positionOptions: {
-    //       enableHighAccuracy: true,
-    //     },
-    //     trackUserLocation: true,
-    //     showUserHeading: true,
-    //   })
-    // );
+    else
+    {
+      console.log(map.remove(m));
+      map.remove(
+        m
+      );
+    }
 
     const nav = new mapboxgl.NavigationControl({   
       visualizePitch: true,
     });
     map.addControl(nav, "bottom-right");
-
-    // const geolocate = new mapboxgl.GeolocateControl({
-    //   positionOptions: {
-    //   enableHighAccuracy: true
-    //   },
-    //   trackUserLocation: true
-    //   });
-
-    //manual markers
-    // setPickLocation(pick);
-    // setDropLocation(drop);
-    // if (pickLocation) addToMap(map, pickLocation);
-    // if (dropLocation) addToMap(map, dropLocation);
-    // if (pickLocation && dropLocation) {
-    //   map.fitBounds([
-    //     dropLocation, // southwestern corner of the bounds
-    //     pickLocation, // northeastern corner of the bounds
-    //   ]);
-    // }
  }, [lng, lat, zoom]);
 
 function consolelog(){
   console.log(m.getDestination().geometry.coordinates);
   console.log(m.getOrigin().geometry.coordinates);
   console.log(m);
-  // m.setOrigin("ambala");
-  // m.setOrigin("delhi");
 }
   const router = useRouter();
   console.log(router.pathname);
-  //manual markers
-  // const addToMap = (map, coordinates) => {
-  //   const marker1 = new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
-  // };
+ const [from, setFrom] = useState("");
+ const [to, setTo] = useState("");
 
+ function handleChange(event) {
+   // setPhone(event.target.value);
+ }
   return <>
   {router.pathname === "/home"?
-  <div style={{position:'absolute',zIndex:"10000"}} onClick={consolelog}>
-    Continue
+  <div style={{position:'absolute',zIndex:"2"}}>
+     <div className=" text-4xl  h-screen flex  temp">
+      <div className=" mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-40 px-16">
+        <h1 className="text-blackfont-medium text-primary mt-4 mb-12 text-center">
+          Choose Your Location
+        </h1>
+
+        <form>
+          <div className="w-screen max-w-xs">
+           
+          </div>
+          <br />
+          <div className="flex justify-center items-center mt-6">
+            <Link href={{ pathname: "/request" }}>
+              <button
+                className={`w-full bg-black text-white font-medium bg-green py-2 px-4 text-xl rounded border border-green focus:outline-none focus:border-green-dark`}
+                onClick={consolelog}
+              >
+                Continue
+              </button>
+            </Link>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>:<></>
 }
   <div id="map"> map</div>;
