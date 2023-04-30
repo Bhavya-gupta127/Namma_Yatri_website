@@ -7,14 +7,14 @@ export default async function handler(req, res) {
         OTP: "7891",
         bookingId: "booking1",
         merchantExoPhone: "1111111111",
-        number: "KA 56 7895"
+        number: "KA AB 56 7895"
       });
     } else {
       res.json({
         OTP: "7892",
         bookingId: "booking2",
         merchantExoPhone: "1111111122",
-        number: "KA 75 5265"
+        number: "KA CD 75 5265"
       });
     }
   }

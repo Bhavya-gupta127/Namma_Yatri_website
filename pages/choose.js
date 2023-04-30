@@ -13,6 +13,8 @@ const Choose = () => {
   const router = useRouter();
   const rides = useStore((state) => state.rides);
   const token = useStore((state) => state.token);
+  const setRides = useStore((state) => state.setRides);
+  const setRideDetails = useStore((state) => state.setRideDetails);
 
   useEffect(() => {
     let myInterval = setInterval(() => {
@@ -58,7 +60,9 @@ const Choose = () => {
 
   if (data) {
     console.log(data);
-    router.push("/");
+    setRides([]);
+    setRideDetails(data);
+    router.push("/ride");
   }
 
   return (

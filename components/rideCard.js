@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useEffect, useState } from "react";
 const RideCard = (props) => {
   const [seconds, setSeconds] = useState(props.timer);
@@ -47,13 +46,13 @@ const RideCard = (props) => {
           </div>
           <div class="flex m-2 space-x-3 md:mt-6">
             <button
-              href="#"
               class={`inline-flex items-center px-10 py-2 text-sm font-medium text-center text-white ${
                 seconds > 0 ? "bg-blue-700" : "bg-gray-700"
               } rounded-lg`}
 
               onClick={() => {
-                props.setId(props.id);
+                if (seconds > 0)
+                  props.setId(props.id);
               }}
             >
               {seconds > 0 ? "Confirm Ride" : "Ride Exipred"}
