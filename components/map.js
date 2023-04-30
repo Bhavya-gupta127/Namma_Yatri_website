@@ -20,11 +20,17 @@ const Map = () => {
   const [lng, setLng] = useState(-70.9);
   const [lat, setLat] = useState(42.35);
   const [zoom, setZoom] = useState(3);
+  const router = useRouter();
   //manual markers
   // const [pickLocation, setPickLocation] = useState([1, 1]);
   // const [dropLocation, setDropLocation] = useState([1, 1]);
-  // const pick = useStore((state) => state.pickLocation);
-  // const drop = useStore((state) => state.dropLocation);
+  const setSrc = useStore((state) => state.setSrc);
+  const setDst = useStore((state) => state.setDst);
+  const src = useStore((state) => state.src);
+  const dst = useStore((state) => state.dst);
+
+  console.log(src, dst);
+
   var m;
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -34,7 +40,7 @@ const Map = () => {
       zoom: zoom,
     });
 
-      m=new Directions({
+    m = new Directions({
       accessToken: mapboxgl.accessToken,
       unit: "metric",
       interactive: false,
@@ -44,16 +50,12 @@ const Map = () => {
       },
     });
     if (router.pathname === "/home") {
-      map.addControl(
-        m,
-        "top-left"
-      );
+      map.addControl(m, "top-left");
     }
     // m.on('result',(e=>{
     //   console.log(e);
     // }))
 
-    
     // map.addControl(
     //   new mapboxgl.GeolocateControl({
     //     positionOptions: {
@@ -64,7 +66,7 @@ const Map = () => {
     //   })
     // );
 
-    const nav = new mapboxgl.NavigationControl({   
+    const nav = new mapboxgl.NavigationControl({
       visualizePitch: true,
     });
     map.addControl(nav, "bottom-right");
@@ -87,30 +89,42 @@ const Map = () => {
     //     pickLocation, // northeastern corner of the bounds
     //   ]);
     // }
- }, [lng, lat, zoom]);
+  }, [lng, lat, zoom, router.pathname]);
 
-function consolelog(){
-  console.log(m.getDestination().geometry.coordinates);
-  console.log(m.getOrigin().geometry.coordinates);
-  console.log(m);
-  // m.setOrigin("ambala");
-  // m.setOrigin("delhi");
-}
-  const router = useRouter();
+  function consolelog() {
+    // m.setOrigin("ambala");
+    // m.setOrigin("delhi");
+    if (m.getDestination().geometry) {
+      console.log(m.getDestination().geometry.coordinates);
+      setDst(m.getDestination().geometry.coordinates);
+      console.log(m.getOrigin().geometry.coordinates);
+      setSrc(m.getOrigin().geometry.coordinates);
+      console.log(m);
+      router.push('/request');
+    }
+  }
+
   console.log(router.pathname);
   //manual markers
   // const addToMap = (map, coordinates) => {
   //   const marker1 = new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
   // };
 
-  return <>
-  {router.pathname === "/home"?
-  <div style={{position:'absolute',zIndex:"10000"}} onClick={consolelog}>
-    Continue
-  </div>:<></>
-}
-  <div id="map"> map</div>;
-  </>
+  return (
+    <>
+      {router.pathname === "/home" ? (
+        <div
+          style={{ position: "absolute", zIndex: "10000" }}
+          onClick={consolelog}
+        >
+          Continue
+        </div>
+      ) : (
+        <></>
+      )}
+      <div id="map"> map</div>;
+    </>
+  );
 };
 
 export default Map;
