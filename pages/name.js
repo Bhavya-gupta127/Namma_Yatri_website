@@ -66,7 +66,7 @@ const Login = () => {
         </h1>
 
         <form onSubmit={handleFormSubmit}>
-          <div className="w-full">
+          <div className="w-full md:max-w-xs">
             {/* <label htmlFor="number">Enter your Mobile Number</label> */}
             {/* <br /> */}
             <input
@@ -82,9 +82,7 @@ const Login = () => {
           </div>
           <br />
           <div className="flex justify-center items-center mt-6">
-
             <Link href={{ pathname: "/home" }}>
-
               <button
                 className={`w-full bg-black text-white font-medium bg-green py-2 px-4 text-xl rounded border border-green focus:outline-none focus:border-green-dark`}
               >
