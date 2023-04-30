@@ -1,7 +1,7 @@
 const Cancel = () => {
     return (
       <div className=" text-4xl  h-screen flex  temp">
-        <div className=" mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-40 px-16">
+        <div className=" mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-20 px-16">
           <div className="flex flex-col">
               <div className="ontheway flex justify-center ">
                   <div className="text-4xl m-2 p-2 text-center ">
@@ -14,7 +14,7 @@ const Cancel = () => {
               </div>
               <div className="flex flex-col justify-center">
 
-                <div className=" m-2 p-2 justify-center text-center text-2xl" >
+                <div className=" m-2 p-2 justify-center text-center text-2xl "  >
                     If you want to go out and enoy the weather, we are a tap away!
                 </div>
                 <div className="flex justify-center">
