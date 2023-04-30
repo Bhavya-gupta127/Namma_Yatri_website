@@ -16,10 +16,11 @@ const Home = () => {
   const src = useStore((state) => state.src);
   const dst = useStore((state) => state.dst);
   const token = useStore((state) => state.token);
+  const setRides = useStore((state) => state.setRides);
 
-  if (token === '') {
-    router.push('/login');
-  }
+  // if (token == '') {
+  //   router.push('/login');
+  // }
 
   const makeRequest = async (points, token) => {
     const res = await fetch(`/api/rideSearch/`, {
@@ -73,6 +74,8 @@ const Home = () => {
 
   if (data) {
     console.log(data);
+    setRides(data.data);
+    router.push('/choose');
   }
 
   return (

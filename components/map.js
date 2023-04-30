@@ -14,9 +14,6 @@ const Map = () => {
   const [lat, setLat] = useState(42.35);
   const [zoom, setZoom] = useState(3);
   const router = useRouter();
-  //manual markers
-  // const [pickLocation, setPickLocation] = useState([1, 1]);
-  // const [dropLocation, setDropLocation] = useState([1, 1]);
   const setSrc = useStore((state) => state.setSrc);
   const setDst = useStore((state) => state.setDst);
   const src = useStore((state) => state.src);
@@ -42,74 +39,63 @@ const Map = () => {
         instructions: false,
       },
     });
+
     if (router.pathname === "/home") {
       map.addControl(m, "top-left");
     }
-    else
-    {
-      console.log(map.remove(m));
-      map.remove(
-        m
-      );
-    }
 
-    const nav = new mapboxgl.NavigationControl({   
+    const nav = new mapboxgl.NavigationControl({
       visualizePitch: true,
     });
     map.addControl(nav, "bottom-right");
- }, [lng, lat, zoom]);
+  }, [lng, lat, zoom]);
 
   function consolelog() {
-    // m.setOrigin("ambala");
-    // m.setOrigin("delhi");
     if (m.getDestination().geometry) {
       console.log(m.getDestination().geometry.coordinates);
       setDst(m.getDestination().geometry.coordinates);
       console.log(m.getOrigin().geometry.coordinates);
       setSrc(m.getOrigin().geometry.coordinates);
       console.log(m);
-      router.push('/request');
+      router.push("/request");
     }
   }
 
   console.log(router.pathname);
- const [from, setFrom] = useState("");
- const [to, setTo] = useState("");
 
- function handleChange(event) {
-   // setPhone(event.target.value);
- }
-  return <>
-  {router.pathname === "/home"?
-  <div style={{position:'absolute',zIndex:"2"}}>
-     <div className=" text-4xl  h-screen flex  temp">
-      <div className=" mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-40 px-16">
-        <h1 className="text-blackfont-medium text-primary mt-4 mb-12 text-center">
-          Choose Your Location
-        </h1>
+  return (
+    <>
+      {router.pathname === "/home" ? (
+        <div style={{ position: "absolute", zIndex: "2" }}>
+          <div className=" text-4xl  h-screen flex  temp">
+            <div className=" mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-40 px-16">
+              <h1 className="text-blackfont-medium text-primary mt-4 mb-12 text-center">
+                Choose Your Location
+              </h1>
 
-        <form>
-          <div className="w-screen max-w-xs">
-           
+              <form>
+                <div className="w-screen max-w-xs"></div>
+                <br />
+                <div className="flex justify-center items-center mt-6">
+                  <Link href={{ pathname: "/request" }}>
+                    <button
+                      className={`w-full bg-black text-white font-medium bg-green py-2 px-4 text-xl rounded border border-green focus:outline-none focus:border-green-dark`}
+                      onClick={consolelog}
+                    >
+                      Continue
+                    </button>
+                  </Link>
+                </div>
+              </form>
+            </div>
           </div>
-          <br />
-          <div className="flex justify-center items-center mt-6">
-            <Link href={{ pathname: "/request" }}>
-              <button
-                className={`w-full bg-black text-white font-medium bg-green py-2 px-4 text-xl rounded border border-green focus:outline-none focus:border-green-dark`}
-                onClick={consolelog}
-              >
-                Continue
-              </button>
-            </Link>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>:<></>
-}
-  <div id="map"> map</div>;
-  </>
+        </div>
+      ) : (
+        <></>
+      )}
+      <div id="map"> map</div>;
+    </>
+  );
 };
 
 export default Map;
