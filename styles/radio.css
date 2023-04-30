@@ -1,0 +1,15 @@
+input[type="radio"] {
+  accent-color: rgb(0, 0, 0);
+  size: 10px;
+  scale: 1.5;
+  /* appearance: none; */
+  padding: 10px;
+  /* background-color: rgb(255, 255, 255); */
+  /* border-radius: 50%; */
+  /* border: rgb(171, 171, 171) solid 2px; */
+}
+input[type="radio"]:checked {
+  /* background-color: rgb(0, 0, 0); */
+  /* border: rgb(0, 0, 0) solid 2px; */
+  padding: 10px;
+}
