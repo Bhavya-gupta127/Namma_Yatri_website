@@ -80,7 +80,7 @@ const Home = () => {
 
   return (
     <div className=" mt-30 text-4xl  h-screen flex  temp">
-      <div className=" mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-20 px-10">
+      <div className="max-w-s mh-full  m-auto flex-col items-center bg-white  rounded-lg sm:border sm:border-primaryBorder shadow-default py-20 px-10">
         <h1 className="text-blackfont-medium text-primary mt-4 mb-8 text-center">
           Request Auto Ride
         </h1>
@@ -127,7 +127,7 @@ const Home = () => {
                   // checked={preference === true}
                 />
                 <label
-                  class="mr-5 mt-px inline-block pl-[0.15rem] hover:cursor-pointer"
+                  class="mr-5 mt-px inline pl-[0.15rem] hover:cursor-pointer"
                   for="radioDefault02"
                 >
                   Choose between multiple drivers
