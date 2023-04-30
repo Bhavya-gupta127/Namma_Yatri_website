@@ -9,8 +9,14 @@ const Home = () => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
 
-  function handleChange(event) {
+  function handleChangeFrom(event) {
     // setPhone(event.target.value);
+    setFrom(event.target.value);
+  }
+
+  function handleChangeTo(event) {
+    // setPhone(event.target.value);
+    setTo(event.target.value);
   }
 
   return (
@@ -31,7 +37,7 @@ const Home = () => {
               className={` w-full p-2 text-primary border rounded-md outline-none text-xl transition duration-150 ease-in-out mb-4`}
               id="from"
               placeholder="From"
-              onChange={handleChange}
+              onChange={handleChangeFrom}
               value={from}
               autoComplete="off"
             />
@@ -41,7 +47,7 @@ const Home = () => {
               className={` w-full p-2 text-primary border rounded-md outline-none text-xl transition duration-150 ease-in-out mb-4`}
               id="to"
               placeholder="To"
-              onChange={handleChange}
+              onChange={handleChangeTo}
               value={to}
               autoComplete="off"
             />

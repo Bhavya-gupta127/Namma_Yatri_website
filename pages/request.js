@@ -27,7 +27,7 @@ const Home = () => {
             {fareMin}-{fareMax}
           </h1>
           <div className="text-center	 text-base text-gray-600 mb-15 mt-3">
-            {distance}km.{time}min
+            {distance}km, {time}min
           </div>
           <hr />
           <h5 className="mt-5 text-lg text-bold text-center">

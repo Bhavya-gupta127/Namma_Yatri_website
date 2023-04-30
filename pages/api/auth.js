@@ -11,9 +11,10 @@ export default async function handler(req, res) {
       body: JSON.stringify(req.body),
     })
       .then((res) => res.json())
-      .catch((er) =>
+      .catch((er) => {
+        console.log(er);
         res.status(404).json({ message: "Something went wrong", error: er })
-      );
+      });
 
     return res.status(200).json(res1);
   } else {

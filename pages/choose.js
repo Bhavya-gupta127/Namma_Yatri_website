@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Router } from "next/router";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+
 const Choose = () => {
   const [seconds, setSeconds] = useState(15);
   const router = useRouter();
