@@ -1,8 +1,5 @@
 import RideCard from "@/components/rideCard";
 import useStore from "@/lib/store";
-import { redirect } from "next/dist/server/api-utils";
-import Link from "next/link";
-import { Router } from "next/router";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -56,14 +53,17 @@ const Choose = () => {
     if (id !== "") {
       refetch();
     }
+    console.log("Here")
   }, [id]);
 
-  if (data) {
-    console.log(data);
-    setRides([]);
-    setRideDetails(data);
-    router.push("/ride");
-  }
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+      setRides([]);
+      setRideDetails(data);
+      router.push("/ride");
+    }
+  }, [data]);
 
   return (
     <div className=" text-4xl  h-screen flex  temp">

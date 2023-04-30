@@ -67,17 +67,18 @@ const Home = () => {
 
   useEffect(() => {
     if (dataSrc) {
-      console.log(dataSrc);
       setSrcName(dataSrc.data);
     }
   
     if (dataDst) {
-      console.log(dataDst);
       setDstName(dataDst.data);
     }
   }, [dataSrc, dataDst]);
 
   useEffect(() => {
+    if (srcName !== "" && dstName !== "") {
+      router.push('/choose');
+    }
     console.log(srcName, dstName);
   }, [srcName, dstName]);
 
@@ -133,9 +134,8 @@ const Home = () => {
   }
 
   if (data) {
-    console.log(data);
     setRides(data.data);
-    router.push("/choose");
+    // router.push("/choose");
   }
 
   return (
