@@ -82,7 +82,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="flex filter drop-shadow-md bg-white px-4 py-4 h-15 items-center">
+    <nav className="flex filter drop-shadow-md bg-white px-4 py-4 h-15 items-center navbarStyle">
       <MobileNav open={open} setOpen={setOpen} />
       <div className="w-3/12 flex items-center">
         <a className="text-2xl font-semibold" href="/">

@@ -13,6 +13,7 @@ const Map = () => {
   const [lng, setLng] = useState(-70.9);
   const [lat, setLat] = useState(42.35);
   const [zoom, setZoom] = useState(3);
+  const [path, setPath] = useState("/");
   const router = useRouter();
   const setSrc = useStore((state) => state.setSrc);
   const setDst = useStore((state) => state.setDst);
@@ -48,8 +49,11 @@ const Map = () => {
       visualizePitch: true,
     });
     map.addControl(nav, "bottom-right");
-  }, [lng, lat, zoom]);
-
+  }, [lng, lat, zoom,path]);
+  useEffect(() => {
+    if(router.pathname=="/home")
+        setPath(router.pathname);
+  }, [router.pathname])
   function consolelog() {
     if (m.getDestination().geometry) {
       console.log(m.getDestination().geometry.coordinates);
