@@ -23,7 +23,7 @@ const RideCard = (props) => {
           <div class="flex flex-row ">
             <img
               class="w-10 h-10 m-3 rounded-full shadow-lg"
-              src="https://avatars.githubusercontent.com/u/77940309?s=96&v=4"
+              src="auto.png"
               alt="Bonnie image"
             />
             <div class="flex flex-col m-3 pb-1">
